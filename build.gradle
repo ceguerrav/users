@@ -1,0 +1,32 @@
+plugins {
+	id 'org.springframework.boot' version '2.5.8'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+}
+
+group = 'com.users'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '1.8'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
+	developmentOnly 'org.springframework.boot:spring-boot-devtools'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	compileOnly 'org.projectlombok:lombok:1.18.22'
+	annotationProcessor 'org.projectlombok:lombok:1.18.22'
+
+// https://mvnrepository.com/artifact/javax.persistence/javax.persistence-api
+	implementation group: 'javax.persistence', name: 'javax.persistence-api', version: '2.2'
+
+
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+test {
+	useJUnitPlatform()
+}
