@@ -1,23 +1,18 @@
-package com.users.users.model;
+package com.users.users.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 import java.time.LocalDateTime;
 import java.util.List;
 
-@Entity
-@Table(name="user")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class User {
+public class UserDTO {
 
     private Integer id;
     private String name;
@@ -29,7 +24,5 @@ public class User {
     private LocalDateTime lastLogin;
     private Boolean isActive;
 
-    @OneToMany(mappedBy="Phone")
-    private List<Phone> phones;
-
+    private List<PhoneDTO> phones;
 }
