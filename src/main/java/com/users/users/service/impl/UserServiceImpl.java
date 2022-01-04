@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Service
@@ -18,13 +19,16 @@ import java.util.Optional;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    //@Autowired
-    //private UserRepository userRepository;
 
     @Override
     public UserDTO createUser(UserDTO userDTO) throws UserException {
 
         User user = UserMapper.INSTANCE.dtoToModel(userDTO);
+        user.setCreated(LocalDateTime.now());
+        user.setModified(LocalDateTime.now());
+        user.setLastLogin(LocalDateTime.now());
+        user.setIsActive(Boolean.TRUE);
+
         user = Optional.ofNullable(userRepository.save(user))
             .orElseThrow(() -> new UserException("Ha ocurrido un error :("));
 

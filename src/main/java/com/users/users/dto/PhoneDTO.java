@@ -1,13 +1,11 @@
 package com.users.users.dto;
 
+import com.fasterxml.jackson.annotation.JsonValue;
 import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
 
 @Getter
 @Setter
@@ -17,7 +15,11 @@ public class PhoneDTO {
 
     private Integer id;
     private String number;
+    @JsonValue
     private String cityCode;
+    @JsonValue
     private String countryCode;
+
+    private  UserDTO user;
 }
 
