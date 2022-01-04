@@ -20,6 +20,6 @@ public class PhoneDTO {
     @JsonValue
     private String countryCode;
 
-    private  UserDTO user;
+    //private  UserDTO user;
 }
 

@@ -17,8 +17,10 @@ public abstract class UserMapper {
     public abstract UserDTO modelToDTO(User user);
     public abstract User dtoToModel(UserDTO userDTO);
 
+    /*
     public abstract List<PhoneDTO> modelListToDTOList(List<Phone> phone);
     public abstract List<Phone> dtoListToModelList(List<PhoneDTO> phoneDTO);
+    */
 
 
 }

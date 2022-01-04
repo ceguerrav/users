@@ -27,16 +27,16 @@ public class Phone {
     //@GeneratedValue(strategy = GenerationType.AUTO)
     @GeneratedValue
     private Integer id;
-    //@Column(name = "number")
+    @Column(name = "number")
     private String number;
-    //@Column(name = "city_code")
+    @Column(name = "city_code")
     private String cityCode;
-    //@Column(name = "country_code")
+    @Column(name = "country_code")
     private String countryCode;
 
     //@ManyToOne(fetch = FetchType.LAZY)
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private User user;
+    //@ManyToOne
+    //@JoinColumn(name = "user_id")
+    //private User user;
 }
 

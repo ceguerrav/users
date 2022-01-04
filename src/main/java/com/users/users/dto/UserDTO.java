@@ -24,5 +24,5 @@ public class UserDTO {
     private LocalDateTime lastLogin;
     private Boolean isActive;
 
-    private List<PhoneDTO> phones;
+    //private List<PhoneDTO> phones;
 }

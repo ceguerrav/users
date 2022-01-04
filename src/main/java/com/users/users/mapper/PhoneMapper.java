@@ -16,6 +16,6 @@ public abstract class PhoneMapper {
     public abstract PhoneDTO modelToDTO(Phone phone);
     public abstract Phone dtoToModel(PhoneDTO phoneDTO);
 
-    public abstract UserDTO modelToDTO(User user);
-    public abstract User dtoToModel(UserDTO userDTO);
+    //public abstract UserDTO modelToDTO(User user);
+    //public abstract User dtoToModel(UserDTO userDTO);
 }

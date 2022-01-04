@@ -27,24 +27,24 @@ public class User {
     //@GeneratedValue(strategy = GenerationType.AUTO)
     @GeneratedValue
     private Integer id;
-    //@Column(name = "name")
+    @Column(name = "name")
     private String name;
-    //@Column(name = "email")
+    @Column(name = "email")
     private String email;
-    //@Column(name = "password")
+    @Column(name = "password")
     private String password;
-    //@Column(name = "token")
+    @Column(name = "token")
     private String token;
-    //@Column(name = "created")
+    @Column(name = "created")
     private LocalDateTime created;
-    //@Column(name = "modified")
+    @Column(name = "modified")
     private LocalDateTime modified;
-    //@Column(name = "last_login")
+    @Column(name = "last_login")
     private LocalDateTime lastLogin;
-    //@Column(name = "is_active")
+    @Column(name = "is_active")
     private Boolean isActive;
 
-    @OneToMany(mappedBy="user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Phone> phones;
+    //@OneToMany(/*mappedBy="user",*/ cascade = CascadeType.ALL, orphanRemoval = true)
+    //private List<Phone> phones;
 
 }
