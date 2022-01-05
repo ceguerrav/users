@@ -18,7 +18,5 @@ public class PhoneDTO {
     private String cityCode;
     private String countryCode;
 
-    @JsonIgnore
-    private  UserDTO user;
 }
 
