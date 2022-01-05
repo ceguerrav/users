@@ -8,10 +8,10 @@ import com.users.users.repository.UserRepository;
 import com.users.users.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
 
 @Service
 @Slf4j
@@ -24,15 +24,21 @@ public class UserServiceImpl implements UserService {
     public UserDTO createUser(UserDTO userDTO) throws UserException {
 
         User user = UserMapper.INSTANCE.dtoToModel(userDTO);
-        user.setCreated(LocalDateTime.now());
-        user.setModified(LocalDateTime.now());
-        user.setLastLogin(LocalDateTime.now());
-        user.setIsActive(Boolean.TRUE);
 
-        user = Optional.ofNullable(userRepository.save(user))
-            .orElseThrow(() -> new UserException("Ha ocurrido un error :("));
 
-        UserDTO result = UserMapper.INSTANCE.modelToDTO(user);
-        return result;
+        try {
+            user.setCreated(LocalDateTime.now());
+            user.setModified(LocalDateTime.now());
+            user.setLastLogin(LocalDateTime.now());
+            user.setIsActive(Boolean.TRUE);
+            user = userRepository.save(user);
+
+        } catch (DataIntegrityViolationException er) {
+            log.info("Email ya existe", user.getEmail());
+            throw new UserException("Email ya existe"+ user.getEmail());
+        } catch (Exception ex) {
+            throw new UserException("Error: "+ ex.getMessage());
+        }
+        return UserMapper.INSTANCE.modelToDTO(user);
     }
 }

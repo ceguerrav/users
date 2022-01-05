@@ -9,7 +9,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
@@ -17,19 +16,20 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
-@Table(name="USER")
+@Table(name="USERS")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 public class User {
+
     @Id
-    //@GeneratedValue(strategy = GenerationType.AUTO)
     @GeneratedValue
+    @Column(name = "id", nullable = false)
     private Integer id;
     @Column(name = "name")
     private String name;
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
     @Column(name = "password")
     private String password;
@@ -44,7 +44,7 @@ public class User {
     @Column(name = "is_active")
     private Boolean isActive;
 
-    //@OneToMany(/*mappedBy="user",*/ cascade = CascadeType.ALL, orphanRemoval = true)
-    //private List<Phone> phones;
+    @OneToMany(mappedBy="user", cascade = CascadeType.ALL)
+    private List<Phone> phones;
 
 }

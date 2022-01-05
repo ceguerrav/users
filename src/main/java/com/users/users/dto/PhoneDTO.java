@@ -1,6 +1,6 @@
 package com.users.users.dto;
 
-import com.fasterxml.jackson.annotation.JsonValue;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -15,11 +15,10 @@ public class PhoneDTO {
 
     private Integer id;
     private String number;
-    @JsonValue
     private String cityCode;
-    @JsonValue
     private String countryCode;
 
-    //private  UserDTO user;
+    @JsonIgnore
+    private  UserDTO user;
 }
 
