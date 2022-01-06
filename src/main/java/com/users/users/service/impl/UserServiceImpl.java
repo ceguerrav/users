@@ -34,8 +34,8 @@ public class UserServiceImpl implements UserService {
             user = userRepository.save(user);
 
         } catch (DataIntegrityViolationException er) {
-            log.info("Email ya existe", user.getEmail());
-            throw new UserException("Email ya existe"+ user.getEmail());
+            log.error("Email ya existe: {}", user.getEmail());
+            throw new UserException("Email ya existe: "+ user.getEmail());
         } catch (Exception ex) {
             throw new UserException("Error: "+ ex.getMessage());
         }
