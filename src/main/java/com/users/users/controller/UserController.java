@@ -60,7 +60,7 @@ public class UserController {
         return new ResponseEntity<>(allUsers, HttpStatus.OK);
     }
 
-    @GetMapping("/find-by")
+    @GetMapping("/find")
     public ResponseEntity<Object> getUser(@RequestParam(name = "email") String email,
                                            @RequestHeader(value = "token") String token) {
         if(!TokenUtil.verifyToken(token)) {
