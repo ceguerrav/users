@@ -4,17 +4,15 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Builder
 @Getter
 @Setter
 @NoArgsConstructor
-public class UserException  extends Exception  {
+public class EmailException extends Exception  {
     private static final long serialVersionUID = 1L;
 
-    public UserException(String message) {
+    public EmailException(String message) {
         super(message);
     }
 }

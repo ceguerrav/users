@@ -13,7 +13,7 @@ public abstract class PhoneMapper {
 
 
     public abstract PhoneDTO modelToDTO(Phone phone);
-    @Mapping(ignore = true, target = "user")
+    //@Mapping(ignore = true, target = "user")
     public abstract Phone dtoToModel(PhoneDTO phoneDTO);
 
 
