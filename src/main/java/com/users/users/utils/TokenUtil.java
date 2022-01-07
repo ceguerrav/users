@@ -22,9 +22,9 @@ import lombok.RequiredArgsConstructor;
 public class TokenUtil {
 
     /**
-     * Tiempo de caducidad 15 segundos
+     * Tiempo de caducidad 30 segundos
      */
-    protected static final long EXPIRE_TIME = 15 * 1000;
+    protected static final long EXPIRE_TIME = 30 * 1000;
     /**
      * Clave privada de token, UUID se utiliza para regenerar una clave privada para cada llamada
      */
@@ -73,7 +73,7 @@ public class TokenUtil {
      * Información de token generada por el token @param
      * @return devuelve un valor booleano (verdadero válido | falso inválido)
      */
-    public static boolean virfityToken(String token) {
+    public static boolean verifyToken(String token) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(PRIVATE_SECRET);
             JWTVerifier verifier = JWT.require(algorithm).build(); //Reusable verifier instance

@@ -22,7 +22,7 @@ public class UserDTO {
     private String email;
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String password;
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    //@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private String token;
     private LocalDateTime created;
     private LocalDateTime modified;

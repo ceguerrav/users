@@ -2,6 +2,7 @@ package com.users.users.service.impl;
 
 import com.users.users.dto.UserDTO;
 import com.users.users.exception.EmailException;
+import com.users.users.exception.PasswordException;
 import com.users.users.exception.UserException;
 import com.users.users.mapper.UserMapper;
 import com.users.users.model.User;
@@ -30,32 +31,22 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
 
+
     @Override
-    public List<UserDTO> getAllUsers(String email) {
-        List<UserDTO> list;
-        if (Objects.nonNull(email) && Strings.isNotEmpty(email)) {
-            list = getAllUsersByEmail(email);
-        } else {
-            list = getAllUsers();
-        }
-        return list;
+    public UserDTO getUserByEmail(String email){
+        Objects.requireNonNull(email, ConstantUtil.EMAIL_REQUIRED);
+        User user = userRepository.findByEmail(email);
+        return UserMapper.INSTANCE.modelToDTO(user);
     }
-
-
-    private List<UserDTO> getAllUsersByEmail(String email){
-        List<User> all = userRepository.findAllByEmail(email);
-        return Optional.ofNullable(UserMapper.INSTANCE.modelListToDTOList(all))
-            .orElse(new ArrayList<>());
-    }
-
-    private List<UserDTO> getAllUsers() {
+    @Override
+    public List<UserDTO> getAllUsers() {
         List<User> all = userRepository.findAll();
         return Optional.ofNullable(UserMapper.INSTANCE.modelListToDTOList(all))
             .orElse(new ArrayList<>());
     }
 
     @Override
-    public UserDTO createUser(UserDTO userDTO) throws UserException, EmailException {
+    public UserDTO createUser(UserDTO userDTO) throws UserException, EmailException, PasswordException {
 
         ValidationUtil.validateUserDTO(userDTO);
 
@@ -72,20 +63,11 @@ public class UserServiceImpl implements UserService {
 
         } catch (DataIntegrityViolationException er) {
             log.error("Email ya existe: {}", user.getEmail());
-            user = findUser(user.getEmail(), user.getPassword());
-            if (Objects.nonNull(user)) {
-                user.setToken(token);
-                userRepository.saveAndFlush(user);
-            }
             throw new UserException("Email ya existe: "+ userDTO.getEmail());
         } catch (Exception ex) {
             throw new UserException("Error: "+ ex.getMessage());
         }
         return UserMapper.INSTANCE.modelToDTO(user);
-    }
-
-    private User findUser(String userMail, String pass) {
-        return userRepository.findUserByEmailAndPassword(userMail, pass);
     }
 
     private String getToken(String email, String pass) {

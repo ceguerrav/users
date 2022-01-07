@@ -3,6 +3,7 @@ package com.users.users.service.impl;
 
 import com.users.users.dto.UserDTO;
 import com.users.users.exception.EmailException;
+import com.users.users.exception.PasswordException;
 import com.users.users.exception.UserException;
 import com.users.users.mapper.UserMapper;
 import com.users.users.model.User;
@@ -31,7 +32,7 @@ class UserServiceImplUnitTest {
         userService = new UserServiceImpl(userRepository);
     }
     @Test
-    void createUserWhenIsOK() throws UserException, EmailException {
+    void createUserWhenIsOK() throws UserException, EmailException, PasswordException {
         UserDTO userDTO = easyRandom.nextObject(UserDTO.class);//UserDTO.builder().build();
         userDTO.setEmail("lala@lala.com");
         userDTO.setPassword("Hhh12");

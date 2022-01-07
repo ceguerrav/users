@@ -2,6 +2,7 @@ package com.users.users.utils;
 
 import com.users.users.dto.UserDTO;
 import com.users.users.exception.EmailException;
+import com.users.users.exception.PasswordException;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
@@ -11,9 +12,10 @@ import java.util.Optional;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class ValidationUtil {
 
-    public static void validateUserDTO(UserDTO user) throws EmailException {
+    public static void validateUserDTO(UserDTO user)
+        throws EmailException, PasswordException {
 
-        Objects.requireNonNull(user, ConstantUtil.PASS_REQUIRED);
+        Objects.requireNonNull(user, ConstantUtil.USER_REQUIRED);
 
         boolean isValid = Optional.ofNullable(user.getEmail())
             .map(FormatValidatorUtil::validateEmail)
@@ -25,10 +27,10 @@ public class ValidationUtil {
 
         isValid = Optional.ofNullable(user.getPassword())
             .map(FormatValidatorUtil::validaPassword)
-            .orElseThrow(() -> new EmailException(ConstantUtil.PASS_REQUIRED));
+            .orElseThrow(() -> new PasswordException(ConstantUtil.PASS_REQUIRED));
 
         if (!isValid) {
-            throw new EmailException(ConstantUtil.PASS_MUST_VALID);
+            throw new PasswordException(ConstantUtil.PASS_MUST_VALID);
         }
     }
 

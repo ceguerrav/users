@@ -12,5 +12,6 @@ public class ConstantUtil {
     public static final String EMAIL_MUST_VALID = "Email debe ser válido";
     public static final String USER_REQUIRED = "Usuario es requerido";
     public static final String NO_VALID_TOKEN = "Token no válido";
+    public static final String ERROR_MESSAGE = "Ha ocurrido un error: ";
 
 }
