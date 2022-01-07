@@ -13,5 +13,8 @@ public class ConstantUtil {
     public static final String USER_REQUIRED = "Usuario es requerido";
     public static final String NO_VALID_TOKEN = "Token no válido";
     public static final String ERROR_MESSAGE = "Ha ocurrido un error: ";
+    public static final String USER_PASS_NO_VALID = "Usuario y/o contraseña inválida";
+    public static final String TOKEN_MESSAGE = "Token: ";
+    public static final String TOKEN_VALID = "Token válido";
 
 }

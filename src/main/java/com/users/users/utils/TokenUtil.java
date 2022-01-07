@@ -22,9 +22,9 @@ import lombok.RequiredArgsConstructor;
 public class TokenUtil {
 
     /**
-     * Tiempo de caducidad 30 segundos
+     * Tiempo de caducidad 60 segundos
      */
-    protected static final long EXPIRE_TIME = 30 * 1000;
+    protected static final long EXPIRE_TIME = 60 * 1000;
     /**
      * Clave privada de token, UUID se utiliza para regenerar una clave privada para cada llamada
      */

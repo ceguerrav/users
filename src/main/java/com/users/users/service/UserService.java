@@ -9,6 +9,8 @@ import java.util.List;
 
 public interface UserService  {
 
+    UserDTO getUserBy(String email, String pass);
+
     UserDTO getUserByEmail(String email);
 
     List<UserDTO> getAllUsers();

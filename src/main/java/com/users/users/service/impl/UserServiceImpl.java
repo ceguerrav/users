@@ -33,6 +33,13 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
+    public UserDTO getUserBy(String email, String pass){
+        Objects.requireNonNull(email, ConstantUtil.EMAIL_REQUIRED);
+        User user = userRepository.findByEmailAndPassword(email, pass);
+        return UserMapper.INSTANCE.modelToDTO(user);
+    }
+
+    @Override
     public UserDTO getUserByEmail(String email){
         Objects.requireNonNull(email, ConstantUtil.EMAIL_REQUIRED);
         User user = userRepository.findByEmail(email);
