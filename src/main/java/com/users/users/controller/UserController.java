@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -52,7 +51,7 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<Object> getAllUsers(@RequestHeader(value = "token") String token) throws UserException {
+    public ResponseEntity<Object> getAllUsers(@RequestHeader(value = "token") String token) {
         ResponseDTO result = ResponseDTO.builder().build();
         List<UserDTO> allUsers;
         try {
@@ -74,7 +73,7 @@ public class UserController {
         return new ResponseEntity<>(allUsers, HttpStatus.OK);
     }
 
-    @GetMapping("/find")
+    @GetMapping
     public ResponseEntity<Object> getUser(@RequestParam(name = "email") String email,
                                           @RequestHeader(value = "token") String token) {
         ResponseDTO result = ResponseDTO.builder().build();
