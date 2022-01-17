@@ -38,7 +38,7 @@ public class TokenUtil {
      * ID de cuenta @param userId
      * @return String token signature
      */
-    public static String signToken(String account, String userId) {
+    public static String signToken(String userName) {
         try {
             // fecha de caducidad
             Date date = new Date(System.currentTimeMillis() + EXPIRE_TIME);
@@ -56,8 +56,8 @@ public class TokenUtil {
             // Generar firma, con parámetros
             return JWT.create()
                 .withHeader(header)
-                .withClaim("loginname", account)
-                .withClaim("userId", userId)
+                .withClaim("loginname", userName)
+                //.withClaim("userId", userId)
                 .withExpiresAt(date)
                 .sign(algorithm);
             // devuelve la cadena de token generada

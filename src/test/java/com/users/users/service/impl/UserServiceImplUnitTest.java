@@ -66,7 +66,7 @@ class UserServiceImplUnitTest {
 
 
     @Test
-    void getAllUsers() {
+    void getAllUsers() throws UserException {
         UserDTO userDTO1 = easyRandom.nextObject(UserDTO.class);
         User model1 = UserMapper.INSTANCE.dtoToModel(userDTO1);
         UserDTO userDTO2 = easyRandom.nextObject(UserDTO.class);
@@ -80,7 +80,7 @@ class UserServiceImplUnitTest {
     }
 
     @Test
-    void getUser() {
+    void getUser() throws UserException {
         UserDTO userDTO1 = easyRandom.nextObject(UserDTO.class);
         User model1 = UserMapper.INSTANCE.dtoToModel(userDTO1);
 
@@ -91,7 +91,7 @@ class UserServiceImplUnitTest {
     }
 
     @Test
-    void getUserBy() {
+    void getUserBy() throws UserException {
         UserDTO userDTO1 = easyRandom.nextObject(UserDTO.class);
         User model1 = UserMapper.INSTANCE.dtoToModel(userDTO1);
 

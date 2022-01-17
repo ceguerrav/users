@@ -9,11 +9,11 @@ import java.util.List;
 
 public interface UserService  {
 
-    UserDTO getUserBy(String email, String pass);
+    UserDTO getUserBy(String email, String pass) throws UserException;
 
-    UserDTO getUserByEmail(String email);
+    UserDTO getUserByEmail(String email) throws UserException;
 
-    List<UserDTO> getAllUsers();
+    List<UserDTO> getAllUsers() throws UserException;
 
     UserDTO createUser(UserDTO userDTO) throws UserException, EmailException, PasswordException;
 }

@@ -51,7 +51,7 @@ public class UserController {
     }
 
     @GetMapping
-    public ResponseEntity<Object> getAllUsers(@RequestHeader(value = "token") String token) {
+    public ResponseEntity<Object> getAllUsers(@RequestHeader(value = "token") String token) throws UserException {
         if(!TokenUtil.verifyToken(token)) {
             ResponseDTO response = ResponseDTO.builder().message(ConstantUtil.NO_VALID_TOKEN).build();
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -62,7 +62,7 @@ public class UserController {
 
     @GetMapping("/find")
     public ResponseEntity<Object> getUser(@RequestParam(name = "email") String email,
-                                           @RequestHeader(value = "token") String token) {
+                                          @RequestHeader(value = "token") String token) throws UserException {
         if(!TokenUtil.verifyToken(token)) {
             ResponseDTO response = ResponseDTO.builder().message(ConstantUtil.NO_VALID_TOKEN).build();
             return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
