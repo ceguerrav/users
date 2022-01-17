@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -52,22 +53,49 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<Object> getAllUsers(@RequestHeader(value = "token") String token) throws UserException {
-        if(!TokenUtil.verifyToken(token)) {
-            ResponseDTO response = ResponseDTO.builder().message(ConstantUtil.NO_VALID_TOKEN).build();
-            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        ResponseDTO result = ResponseDTO.builder().build();
+        List<UserDTO> allUsers;
+        try {
+            if(!TokenUtil.verifyToken(token)) {
+                result = ResponseDTO.builder().message(ConstantUtil.NO_VALID_TOKEN).build();
+                return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+            allUsers = userService.getAllUsers();
+        } catch (UserException e) {
+            log.error(e.getMessage());
+            result = ResponseDTO.builder().message(e.getMessage()).build();
+            return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+            result.setMessage(ConstantUtil.ERROR_MESSAGE + ex.getMessage());
+            return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        List<UserDTO> allUsers = userService.getAllUsers();
         return new ResponseEntity<>(allUsers, HttpStatus.OK);
     }
 
     @GetMapping("/find")
     public ResponseEntity<Object> getUser(@RequestParam(name = "email") String email,
-                                          @RequestHeader(value = "token") String token) throws UserException {
-        if(!TokenUtil.verifyToken(token)) {
-            ResponseDTO response = ResponseDTO.builder().message(ConstantUtil.NO_VALID_TOKEN).build();
-            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+                                          @RequestHeader(value = "token") String token) {
+        ResponseDTO result = ResponseDTO.builder().build();
+        UserDTO user;
+        try {
+            if(!TokenUtil.verifyToken(token)) {
+                ResponseDTO response = ResponseDTO.builder().message(ConstantUtil.NO_VALID_TOKEN).build();
+                return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+            user = userService.getUserByEmail(email);
+
+        } catch (UserException e) {
+            log.error(e.getMessage());
+            result = ResponseDTO.builder().message(e.getMessage()).build();
+            return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+
+        } catch (Exception ex) {
+            log.error(ex.getMessage());
+            result.setMessage(ConstantUtil.ERROR_MESSAGE + ex.getMessage());
+            return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        UserDTO user = userService.getUserByEmail(email);
         return new ResponseEntity<>(user, HttpStatus.OK);
     }
 

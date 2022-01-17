@@ -29,8 +29,6 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
-
-
     @Override
     public UserDTO getUserBy(String email, String pass) throws UserException {
         Objects.requireNonNull(email, ConstantUtil.EMAIL_REQUIRED);
