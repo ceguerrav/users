@@ -38,13 +38,19 @@ public class UserController {
 
         try {
             return new ResponseEntity<>(userService.createUser(userDTO), HttpStatus.CREATED);
-        } catch (UserException | PasswordException | EmailException e) {
+        } catch (EmailException e) {
+            log.error(e.getMessage());
+            return ResponseUtil.buildResponse(e.getMessage(), HttpStatus.CONFLICT);
+        } catch (PasswordException e) {
+            log.error(e.getMessage());
+            return ResponseUtil.buildResponse(e.getMessage(), HttpStatus.UNAUTHORIZED);
+        } catch (UserException e) {
             log.error(e.getMessage());
             return ResponseUtil.buildResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
-
         } catch (Exception ex) {
             log.error(ex.getMessage());
-            return ResponseUtil.buildResponse(ConstantUtil.ERROR_MESSAGE + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseUtil.buildResponse(ConstantUtil.ERROR_MESSAGE + ex.getMessage(),
+                HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
