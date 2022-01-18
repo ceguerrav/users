@@ -53,7 +53,7 @@ public class TokenController {
             .build();
         if(!TokenUtil.verifyToken(token)) {
             response.setMessage(ConstantUtil.NO_VALID_TOKEN);
-            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(response, HttpStatus.UNAUTHORIZED);
         }
      return new ResponseEntity<>(response, HttpStatus.OK);
     }

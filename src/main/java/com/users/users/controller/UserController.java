@@ -8,17 +8,18 @@ import com.users.users.exception.PasswordException;
 import com.users.users.exception.UserException;
 import com.users.users.service.UserService;
 import com.users.users.utils.ConstantUtil;
+import com.users.users.utils.ResponseUtil;
 import com.users.users.utils.TokenUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -34,20 +35,17 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<Object> createUser(@RequestBody UserDTO userDTO)  {
-        Object result;
+
         try {
-            result = userService.createUser(userDTO);
+            return new ResponseEntity<>(userService.createUser(userDTO), HttpStatus.CREATED);
         } catch (UserException | PasswordException | EmailException e) {
             log.error(e.getMessage());
-            result = ResponseDTO.builder().message(e.getMessage()).build();
-            return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseUtil.buildResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 
         } catch (Exception ex) {
             log.error(ex.getMessage());
-            result = ResponseDTO.builder().message(ConstantUtil.ERROR_MESSAGE + ex.getMessage()).build();
-            return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseUtil.buildResponse(ConstantUtil.ERROR_MESSAGE + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(result, HttpStatus.CREATED);
     }
 
     @GetMapping
@@ -56,47 +54,39 @@ public class UserController {
         List<UserDTO> allUsers;
         try {
             if(!TokenUtil.verifyToken(token)) {
-                result = ResponseDTO.builder().message(ConstantUtil.NO_VALID_TOKEN).build();
-                return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+                return ResponseUtil.buildResponse(ConstantUtil.NO_VALID_TOKEN, HttpStatus.UNAUTHORIZED);
             }
             allUsers = userService.getAllUsers();
+            return new ResponseEntity<>(allUsers, HttpStatus.OK);
         } catch (UserException e) {
             log.error(e.getMessage());
-            result = ResponseDTO.builder().message(e.getMessage()).build();
-            return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
-
+            return ResponseUtil.buildResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         } catch (Exception ex) {
             log.error(ex.getMessage());
             result.setMessage(ConstantUtil.ERROR_MESSAGE + ex.getMessage());
             return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(allUsers, HttpStatus.OK);
+
     }
 
-    @GetMapping
-    public ResponseEntity<Object> getUser(@RequestParam(name = "email") String email,
+    @GetMapping("/{email}")
+    public ResponseEntity<Object> getUser(@PathVariable(name = "email") String email,
                                           @RequestHeader(value = "token") String token) {
-        ResponseDTO result = ResponseDTO.builder().build();
         UserDTO user;
         try {
             if(!TokenUtil.verifyToken(token)) {
-                ResponseDTO response = ResponseDTO.builder().message(ConstantUtil.NO_VALID_TOKEN).build();
-                return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+                return ResponseUtil.buildResponse(ConstantUtil.NO_VALID_TOKEN, HttpStatus.UNAUTHORIZED);
             }
             user = userService.getUserByEmail(email);
-
+            return new ResponseEntity<>(user, HttpStatus.OK);
         } catch (UserException e) {
             log.error(e.getMessage());
-            result = ResponseDTO.builder().message(e.getMessage()).build();
-            return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseUtil.buildResponse(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 
         } catch (Exception ex) {
             log.error(ex.getMessage());
-            result.setMessage(ConstantUtil.ERROR_MESSAGE + ex.getMessage());
-            return new ResponseEntity<>(result, HttpStatus.INTERNAL_SERVER_ERROR);
+            return ResponseUtil.buildResponse(ConstantUtil.ERROR_MESSAGE + ex.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        return new ResponseEntity<>(user, HttpStatus.OK);
     }
-
 
 }
