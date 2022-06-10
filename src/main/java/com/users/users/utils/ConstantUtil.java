@@ -3,6 +3,8 @@ package com.users.users.utils;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
+import java.math.BigDecimal;
+
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class ConstantUtil {
 
@@ -16,5 +18,6 @@ public class ConstantUtil {
     public static final String USER_PASS_NO_VALID = "Usuario y/o contraseña inválida";
     public static final String TOKEN_MESSAGE = "Token: ";
     public static final String TOKEN_VALID = "Token válido";
+    public static final BigDecimal VALOR_REDONDEO = new BigDecimal("0.5");
 
 }
