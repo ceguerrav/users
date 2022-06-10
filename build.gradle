@@ -50,6 +50,9 @@ dependencies {
 	// Anotaciones y validaciones
 	implementation 'javax.validation:validation-api:2.0.1.Final'
     //implementation 'org.springframework.boot:spring-boot-starter-actuator'
+
+	//annotationProcessor "io.micronaut.configuration:micronaut-openapi"
+	//compile "io.swagger.core.v3:swagger-annotations"
 }
 
 test {
